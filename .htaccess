@@ -1,0 +1,21 @@
+# gefragt bei KI: "Was soll in der .htaccess Datei sein?"
+
+# URL Überschreibung aktivieren
+RewriteEngine On
+
+# Schutz vor Ansicht von Konfigurationsdateien
+<Files "config/*">
+    Deny from all
+</Files>
+
+# Schutz vor Ansicht von Dateien in includes
+<FilesMatch "\.(ini|log)$">
+    Deny from all
+</FilesMatch>
+
+# Standard-Zeichensatz
+AddDefaultCharset UTF-8
+
+# Festlegen des Zeitzonens
+php_value date.timezone "Europe/Berlin"
+
