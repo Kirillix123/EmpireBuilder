@@ -1,0 +1,36 @@
+# gefragt bei KI: "Was soll in der .gitignore Datei sein?"
+
+# Konfigurationsdateien
+config/local.php
+*.env
+
+# Logs
+*.log
+logs/
+
+# Datenbank
+*.db
+*.sqlite
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+
+# Temporäre Dateien
+*.tmp
+*.temp
+*~
+
+# XAMPP
+xampp/
+
+# Versionskontrollsystem
+.git/
+.svn/
+
