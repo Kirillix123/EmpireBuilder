@@ -582,13 +582,13 @@ async function openCasino(buildingId) {
     content.innerHTML = `
         <div class="space-y-4">
             <div>
-                <p id="casinoStatus">Generiere neue Zahl...</p>
+                <p id="casinoStatus" class="text-white">Generiere neue Zahl...</p>
             </div>
             <div id="casinoGame" class="hidden space-y-4">
-                <p class="font-bold text-xl">Letzte Zahl: <span id="lastNumber">-</span></p>
+                <p class="font-bold text-xl text-white">Letzte Zahl: <span id="lastNumber">-</span></p>
                 <div>
-                    <label class="block mb-2">Einsatz:</label>
-                    <input type="number" id="casinoBet" class="w-full px-4 py-2 border border-gray-300 rounded-lg" min="1" value="10">
+                    <label class="block mb-2 text-white">Einsatz:</label>
+                    <input type="number" id="casinoBet" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-800 text-white" min="1" value="10">
                 </div>
                 <div class="flex space-x-4">
                     <button onclick="placeBet('higher')" class="flex-1 bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition">
