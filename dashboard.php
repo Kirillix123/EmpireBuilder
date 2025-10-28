@@ -74,8 +74,8 @@ $buildings = getBuildings(getCurrentUserId());
                 </div>
                 <!-- Nahrung-Panel mit Klick-Button -->
                 <div class="bg-gradient-to-br from-green-900 to-green-800 border-2 border-green-500 rounded-lg p-4">
-                    <div class="text-xs text-green-300 mb-1">🌾 Nahrung</div>
-                    <div class="text-2xl font-bold text-green-100" id="food"><?php echo $user['food']; ?></div>
+                    <div class="text-xs text-green-300 mb-1">🌾 Nahrung (verfügbar)</div>
+                    <div class="text-2xl font-bold text-green-100" id="food"><?php echo max(0, $user['food'] - ($user['population'] ?? 0)); ?></div>
                     <div class="text-xs text-green-400 mt-1">+<span id="foodIncome">0</span>/s</div>
                     <!-- Button zum Sammeln von Nahrung durch Klicken -->
                     <button onclick="clickResource('food')" class="mt-2 w-full bg-green-600 text-white py-1 px-2 rounded text-xs hover:bg-green-700">

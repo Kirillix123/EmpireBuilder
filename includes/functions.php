@@ -24,6 +24,9 @@ function getUserData($userId) {
             if (!isset($user['population_multiplier'])) {
                 $user['population_multiplier'] = 1.0;
             }
+            if (!isset($user['population_fraction'])) {
+                $user['population_fraction'] = 0.0;
+            }
             if (!isset($user['casino_last_number'])) {
                 $user['casino_last_number'] = null;
             }
@@ -196,6 +199,23 @@ function updateResources($userId, $goldChange, $woodChange, $stoneChange, $foodC
         // Multiplikator auf Gold anwenden
         $totalIncome = $totalIncome * $multiplier;
         
+        // Passives Einkommen mit verstrichener Zeit multiplizieren
+        $totalIncome = $totalIncome * $elapsedSeconds;
+        $totalFood = $totalFood * $elapsedSeconds;
+        $totalStone = $totalStone * $elapsedSeconds;
+        $totalWood = $totalWood * $elapsedSeconds;
+        
+        // Bevölkerung wird proportional zu verstrichener Zeit generiert (house: 0.1/Sek)
+        $populationGenerated = $totalPopulation * $elapsedSeconds;
+        
+        // Aktuelle population_fraction holen
+        $populationFraction = (float)($user['population_fraction'] ?? 0.0);
+        
+        // Berechnen der neuen population_fraction und des ganzzahligen Bevölkerungswachstums
+        $newPopulationFraction = $populationFraction + $populationGenerated;
+        $wholePopulationToAdd = (int)floor($newPopulationFraction); // Ganzer Teil
+        $remainingFraction = $newPopulationFraction - $wholePopulationToAdd; // Rest
+        
         // Nahrungsverbrauch: jede Sekunde -population
         $foodDrain = $population * $elapsedSeconds;
         $netFoodChange = $foodChange + $totalFood - $foodDrain;
@@ -207,9 +227,10 @@ function updateResources($userId, $goldChange, $woodChange, $stoneChange, $foodC
                                 stone = stone + ? + ?,
                                 food = GREATEST(0, food + ?),
                                 population = population + ?,
+                                population_fraction = ?,
                                 last_tick = NOW()
                                 WHERE id = ?");
-        $stmt->execute([$goldChange, $totalIncome, $woodChange, $totalWood, $stoneChange, $totalStone, $netFoodChange, $totalPopulation, $userId]);
+        $stmt->execute([$goldChange, $totalIncome, $woodChange, $totalWood, $stoneChange, $totalStone, $netFoodChange, $wholePopulationToAdd, $remainingFraction, $userId]);
         
         return true;
     } catch (PDOException $e) {

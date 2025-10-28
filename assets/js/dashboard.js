@@ -177,7 +177,9 @@ async function updateResources() {
             document.getElementById('gold').textContent = data.resources.gold;
             document.getElementById('wood').textContent = data.resources.wood;
             document.getElementById('stone').textContent = data.resources.stone;
-            document.getElementById('food').textContent = data.resources.food;
+            // Zeige verfügbare Nahrung (Nahrung - Bevölkerung)
+            const availableFood = Math.max(0, data.resources.food - (data.resources.population ?? 0));
+            document.getElementById('food').textContent = availableFood;
             document.getElementById('population').textContent = data.resources.population ?? 0;
             document.getElementById('populationMult').textContent = data.resources.multiplier ?? 1.0;
             document.getElementById('goldMultiplier').textContent = data.resources.multiplier ?? 1.0;
